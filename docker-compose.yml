@@ -1,0 +1,65 @@
+version: "3.2"
+
+services:
+
+  consul:
+    image: "consul:latest"
+    hostname: consul
+    volumes:
+      - ./consul/data:/consul/data
+      - ./consul/config:/consul/config
+    environment:
+      - "CONSUL_LOCAL_CONFIG={\"disable_update_check\": true, \"skip_leave_on_interrupt\": true}"
+    entrypoint:
+      - consul
+      - agent
+      - -server
+      - -data-dir=/consul
+      - -bootstrap-expect=1
+      - -ui 
+      - -client=0.0.0.0
+    ports:
+      - "8400:8400"
+      - "8501:8500"
+      - "8600:53"
+
+  consul_replica:
+    image: "consul:latest"
+    hostname: consul-replica
+    volumes:
+      - ./consul_replica/data:/consul/data
+      - ./consul_replica/config:/consul/config
+    entrypoint:
+      - consul
+      - agent
+      - -server
+      - -data-dir=/consul
+      - -retry-join=consul
+      - -ui 
+      - -client=0.0.0.0
+    ports:
+      - "8302:8300"
+      - "8402:8400"
+      - "8502:8500"
+      - "8602:8600"
+      - "9002:9001"
+    links:
+      - consul
+
+  microservice_py:
+    build: ./microservice_sample_1/
+    hostname: microservice-1
+    ports:
+      - "8080:8080"
+    links:
+      - consul
+    depends_on:
+      - consul
+
+  microservice_2_py:
+    build: ./microservice_sample_2/
+    hostname: microservice-2
+    ports:
+      - "8180:8080"
+    links:
+      - consul

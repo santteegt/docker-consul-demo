@@ -1,0 +1,74 @@
+{  
+   "Service":"PythonApp",
+   "Nodes":[  
+      {  
+         "Node":{  
+            "ID":"ea15e41e-e3cb-f9b7-4765-971a0e7701b7",
+            "Node":"consul",
+            "Address":"172.20.0.2",
+            "Datacenter":"dc1",
+            "TaggedAddresses":{  
+               "lan":"172.20.0.2",
+               "wan":"172.20.0.2"
+            },
+            "Meta":{  
+               "consul-network-segment":""
+            },
+            "CreateIndex":5,
+            "ModifyIndex":6
+         },
+         "Service":{  
+            "ID":"PythonApp",
+            "Service":"PythonApp",
+            "Tags":[  
+               "flask"
+            ],
+            "Address":"172.20.0.3",
+            "Port":8080,
+            "EnableTagOverride":false,
+            "CreateIndex":10,
+            "ModifyIndex":10
+         },
+         "Checks":[  
+            {  
+               "Node":"consul",
+               "CheckID":"serfHealth",
+               "Name":"Serf Health Status",
+               "Status":"passing",
+               "Notes":"",
+               "Output":"Agent alive and reachable",
+               "ServiceID":"",
+               "ServiceName":"",
+               "ServiceTags":[  
+
+               ],
+               "CreateIndex":5,
+               "ModifyIndex":5
+            },
+            {  
+               "Node":"consul",
+               "CheckID":"service:PythonApp",
+               "Name":"Service 'PythonApp' check",
+               "Status":"passing",
+               "Notes":"",
+               "Output":"HTTP GET http://172.20.0.3:8080/health: 200 OK Output: {\"status\": \"healthy\"}",
+               "ServiceID":"PythonApp",
+               "ServiceName":"PythonApp",
+               "ServiceTags":[  
+                  "flask"
+               ],
+               "CreateIndex":10,
+               "ModifyIndex":450
+            }
+         ]
+      }
+   ],
+   "DNS":{  
+      "TTL":"10s"
+   },
+   "Datacenter":"dc1",
+   "Failovers":0,
+   "Index":0,
+   "LastContact":0,
+   "KnownLeader":true
+}
