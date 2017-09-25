@@ -39,8 +39,10 @@ In this tutorial, the query registration is made through the [Microservice Sampl
 * To Executing the prepared service query created above, copy the ID field from `query_id.json` file and run the following command:
 
 ```
-$ curl --request GET http://127.0.0.1:8501/v1/query/db3d17cd-7fbc-2620-27cd-42218213e8f6/execute
+$ curl --request GET http://127.0.0.1:8501/v1/query/<query-template-id>/execute
 ```
+
+An example of query response can be seen in [query_execution.sample.json](query_execution.sample.json) file.
 
 * To query current available queries:
 
